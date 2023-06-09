@@ -32,30 +32,30 @@ class Graph:
             self.graph[v1].remove(v2)
             self.graph[v2].remove(v1)
 
-    def dfs_iterative(self, v):
-        if v not in self.graph:
-            print("Node not found")
-            return
-        stack = [v]
-        while stack:
-            temp = stack.pop()
-            if temp not in self.visited:
-                print(temp)
-                self.visited.add(temp)
-                for i in self.graph[temp]:
-                    stack.append(i)
+    def dfs(self, start):
+        self.visited = []
+        self._dfs(start)
+
+    def _dfs(self, v):
+        self.visited.append(v)
+        print(v, end=" ")
+        for neighbor in self.graph[v]:
+            if neighbor not in self.visited:
+                self._dfs(neighbor)
 
     def bfs(self, start):
-        queue = [start]
+        self.visited = []
+        queue = []
+        queue.append(start)
+        self.visited.append(start)
+
         while queue:
-            node = queue.pop(0)
-            if node not in self.visited:
-                print(node)
-                self.visited.add(node)
-                b = self.graph[node]
-                for temp in b:
-                    if temp not in self.visited:
-                        queue.append(temp)
+            v = queue.pop(0)
+            print(v, end=" ")
+            for neighbor in self.graph[v]:
+                if neighbor not in self.visited:
+                    queue.append(neighbor)
+                    self.visited.append(neighbor)
 
 
 graph = Graph()
