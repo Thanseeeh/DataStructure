@@ -112,6 +112,21 @@ class BinarySearchTree:
                 return self.right_child.depth_node(x) + 1
             else:
                 return -1
+            
+    def is_bst(self):
+        def is_bst_helper(node, min_value, max_value):
+            if node is None:
+                return True
+
+            if node.key < min_value or node.key > max_value:
+                return False
+
+            left_check = is_bst_helper(node.left_child, min_value, node.key - 1)
+            right_check = is_bst_helper(node.right_child, node.key + 1, max_value)
+
+            return left_check and right_check
+
+        return is_bst_helper(self, float('-inf'), float('inf'))
 
     def pre_order(self):
         if self.key is None:
@@ -172,6 +187,8 @@ height = bst.height_tree()
 print("height of tree   = ", height)
 depth = bst.depth_node(15)
 print("depth of node    = ", depth)
+is_bst = bst.is_bst()
+print("Is a binary search tree:", is_bst)
 print("_____________________________________________________________________________")
 
 
