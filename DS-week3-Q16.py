@@ -62,6 +62,17 @@ class Trie:
         if not child_node.children and not child_node.endofword:
             del node.children[char]
 
+    def count_words(self):
+        return self._count_words(self.root)
+
+    def _count_words(self, node):
+        count = 0
+        if node.endofword:
+            count += 1
+        for char in node.children:
+            count += self._count_words(node.children[char])
+        return count
+
 
 
 t = Trie()
@@ -74,3 +85,5 @@ t.insert("rasak")
 print(t.start_with_prefix("s"))
 t.delete("suhail")
 print(t.start_with_prefix("s"))
+
+print(t.count_words())
